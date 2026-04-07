@@ -1,0 +1,31 @@
+# ===== CORE FLASK =====
+flask
+flask-cors
+
+# ===== YOUTUBE TRANSCRIPT =====
+youtube-transcript-api
+requests
+
+# ===== NLP / ML =====
+scikit-learn
+sentence-transformers
+nltk
+numpy
+gensim
+
+# ===== ABSTRACTIVE SUMMARIZER (BART) =====
+# Requires ~1.6GB download on first run
+transformers
+torch
+
+# ===== PDF REPORT GENERATION =====
+reportlab
+
+# ===== OPTIONAL: Word2Vec & GloVe =====
+# These are large external model files you download separately:
+# Word2Vec: https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM
+#   → save as: GoogleNews-vectors-negative300.bin
+# GloVe:    https://nlp.stanford.edu/data/glove.6B.zip
+#   → extract and save as: glove.6B.300d/glove.6B.300d.txt
+# Both files go in the same folder as app.py
+# App works without them — falls back to BERT-only scoring

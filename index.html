@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TopicScout — Smart Video Analysis</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <button class="theme-toggle" id="themeToggle" title="Toggle dark mode">🌙</button>
+    <div class="app-wrapper">
+        <header class="header">
+            <div class="logo-mark">⟡</div>
+            <h1 class="brand">TopicScout</h1>
+            <p class="tagline">Analyze YouTube videos for topic relevance using AI</p>
+        </header>
+        <nav class="tab-nav">
+            <button class="tab-btn active" data-tab="single">Single Video</button>
+            <button class="tab-btn" data-tab="multitopic">Multi-Topic</button>
+            <button class="tab-btn" data-tab="compare">Compare</button>
+            <button class="tab-btn" data-tab="playlist">Playlist</button>
+            <button class="tab-btn" data-tab="history">History</button>
+        </nav>
+
+        <!-- Single Video -->
+        <div class="tab-content active" id="tab-single">
+            <div class="card form-card">
+                <form id="urlForm">
+                    <div class="input-group"><label>YouTube URL</label>
+                        <input type="url" id="urlInput" placeholder="https://youtube.com/watch?v=..." required></div>
+                    <div class="input-group"><label>Topic to Analyze</label>
+                        <input type="text" id="topicInput" placeholder="e.g. machine learning, recursion..." required></div>
+                    <button type="submit" class="btn-primary" id="analyzeBtn">
+                        <span class="btn-text">Analyze Video</span><span class="btn-icon">→</span>
+                    </button>
+                </form>
+            </div>
+            <div class="progress-wrap" id="progressWrap" style="display:none;">
+                <div class="progress-steps">
+                    <div class="step" id="step1"><div class="step-dot"></div><span>Fetching transcript</span></div>
+                    <div class="step" id="step2"><div class="step-dot"></div><span>Running BERT</span></div>
+                    <div class="step" id="step3"><div class="step-dot"></div><span>Building timeline</span></div>
+                    <div class="step" id="step4"><div class="step-dot"></div><span>Generating summary</span></div>
+                </div>
+                <div class="progress-bar-track"><div class="progress-bar-fill" id="progressFill"></div></div>
+            </div>
+            <div id="results"></div>
+        </div>
+
+        <!-- Multi-Topic -->
+        <div class="tab-content" id="tab-multitopic">
+            <div class="card form-card">
+                <form id="multiTopicForm">
+                    <div class="input-group"><label>YouTube URL</label>
+                        <input type="url" id="multiUrlInput" placeholder="https://youtube.com/watch?v=..." required></div>
+                    <div class="input-group"><label>Topics (comma-separated)</label>
+                        <input type="text" id="multiTopicsInput" placeholder="e.g. loops, functions, recursion, arrays" required></div>
+                    <button type="submit" class="btn-primary" id="multiTopicBtn">
+                        <span class="btn-text">Generate Radar Chart</span><span class="btn-icon">→</span>
+                    </button>
+                </form>
+            </div>
+            <div id="multiTopicResults"></div>
+        </div>
+
+        <!-- Compare -->
+        <div class="tab-content" id="tab-compare">
+            <div class="card form-card">
+                <form id="compareForm">
+                    <div class="input-group"><label>Video 1 URL</label>
+                        <input type="url" id="compareUrl1" placeholder="https://youtube.com/watch?v=..." required></div>
+                    <div class="input-group"><label>Video 2 URL</label>
+                        <input type="url" id="compareUrl2" placeholder="https://youtube.com/watch?v=..." required></div>
+                    <div class="input-group"><label>Topic to Compare</label>
+                        <input type="text" id="compareTopicInput" placeholder="e.g. python, neural networks..." required></div>
+                    <button type="submit" class="btn-primary" id="compareBtn">
+                        <span class="btn-text">Compare Videos</span><span class="btn-icon">→</span>
+                    </button>
+                </form>
+            </div>
+            <div id="compareResults"></div>
+        </div>
+
+        <!-- Playlist -->
+        <div class="tab-content" id="tab-playlist">
+            <div class="card form-card">
+                <form id="playlistForm">
+                    <div class="input-group"><label>YouTube Playlist URL</label>
+                        <input type="url" id="playlistInput" placeholder="https://youtube.com/playlist?list=..." required></div>
+                    <div class="input-group"><label>Topic to Find</label>
+                        <input type="text" id="playlistTopicInput" placeholder="e.g. neural networks..." required></div>
+                    <button type="submit" class="btn-primary" id="playlistBtn">
+                        <span class="btn-text">Analyze Playlist</span><span class="btn-icon">→</span>
+                    </button>
+                </form>
+            </div>
+            <div id="playlistResults"></div>
+        </div>
+
+        <!-- History -->
+        <div class="tab-content" id="tab-history">
+            <div class="card">
+                <div class="history-header">
+                    <h3>Recent Searches</h3>
+                    <button class="btn-ghost" id="clearHistory">Clear All</button>
+                </div>
+                <div id="historyList"><p class="muted">No recent searches yet.</p></div>
+            </div>
+        </div>
+    </div>
+    <script src="./app.js"></script>
+</body>
+</html>
